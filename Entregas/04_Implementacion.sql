@@ -404,3 +404,44 @@ COMMIT;
 --leer el archivo y generar un insert por cada fila, este script tambien está en archivos complementarios, 
 --una vez generado el archivo de inserción lo que hice fue cargarlo
 
+---------------------------------------------------------------------------------------------------------------------------
+-- Creación de la tabla de estadísticas diarias
+CREATE TABLE "estadisticas_diarias" (
+  "fecha_dia" DATE,
+  "id_terminal" int,
+  "id_empresa" int,
+  "total_viajes" int,
+  "total_pasajeros" int,
+  "duracion_promedio" float
+);
+
+ALTER TABLE "estadisticas_diarias" ADD FOREIGN KEY ("id_terminal") REFERENCES "Terminales" ("id_terminal");
+
+ALTER TABLE "estadisticas_diarias" ADD FOREIGN KEY ("id_empresa") REFERENCES "Empresas" ("id_empresa");
+---------------------------------------------------------------------------------------------------------------------------
+--Creación de una vista para ver el resumen de las estadísticas 
+--uso el trunc para converir la fecha a un formato de día
+--calculé el total de viajes, total de pasajeros y la duración promedio de los viajes en horas
+CREATE OR REPLACE VIEW "vista_estadisticas_diarias" AS
+SELECT
+  TRUNC(v."fecha_salida") AS fecha_dia,
+  t."nombre_terminal",
+  e."nombre_empresa",
+  COUNT(*) AS total_viajes,
+  SUM(v."pasajeros") AS total_pasajeros,
+  ROUND(
+    AVG(
+      EXTRACT(DAY FROM (v."fecha_llegada" - v."fecha_salida")) * 24 +
+      EXTRACT(HOUR FROM (v."fecha_llegada" - v."fecha_salida")) +
+      EXTRACT(MINUTE FROM (v."fecha_llegada" - v."fecha_salida")) / 60.0
+    ),
+    2
+  ) AS duracion_promedio
+FROM "Viajes" v
+JOIN "Terminales" t ON v."id_terminal" = t."id_terminal"
+JOIN "Empresas" e ON v."id_empresa" = e."id_empresa"
+GROUP BY TRUNC(v."fecha_salida"), t."nombre_terminal", e."nombre_empresa";
+--Para ver la vista que acabe de crear se ejecuta
+SELECT * FROM "vista_estadisticas_diarias";
+
+---------------------------------------------------------------------------------------------------------------------------
