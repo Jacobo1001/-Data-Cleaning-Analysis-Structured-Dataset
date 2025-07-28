@@ -1,0 +1,7 @@
+# Archivos generados localmente
+*.log
+*.tmp
+*.bak
+*.DS_Store
+__pycache__/
+*.pyc
