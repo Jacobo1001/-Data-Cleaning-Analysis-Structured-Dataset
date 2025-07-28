@@ -1,0 +1,2 @@
+"fecha_dia"	"id_terminal"	"id_empresa"	"total_viajes"	"total_pasajeros"	"duracion_promedio"
+31/12/24	1	6	158	929	1.75

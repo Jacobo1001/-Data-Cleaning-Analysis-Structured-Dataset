@@ -443,5 +443,75 @@ JOIN "Empresas" e ON v."id_empresa" = e."id_empresa"
 GROUP BY TRUNC(v."fecha_salida"), t."nombre_terminal", e."nombre_empresa";
 --Para ver la vista que acabe de crear se ejecuta
 SELECT * FROM "vista_estadisticas_diarias";
+--El resultado de este SELECT lo puse en la carpeta de archivos complementarios y es el que se llama Extra_Resultado_Vista
+---------------------------------------------------------------------------------------------------------------------------
+--Función para calcular la duración de un viaje en horas
+--Esta funcion la quiero usar para mi proceso de registrar estadisticas diarias
+--Recibe dos fechas, la de salida y la de llegada, y devuelve la duración en horas 
+CREATE OR REPLACE FUNCTION calcular_duracion_horas(
+  fecha_salida TIMESTAMP,
+  fecha_llegada TIMESTAMP
+) RETURN NUMBER IS
+  duracion NUMBER;
+BEGIN
+  duracion := 
+    EXTRACT(DAY FROM (fecha_llegada - fecha_salida)) * 24 +
+    EXTRACT(HOUR FROM (fecha_llegada - fecha_salida)) +
+    EXTRACT(MINUTE FROM (fecha_llegada - fecha_salida)) / 60;
 
+  RETURN ROUND(duracion, 2);
+END;
+---------------------------------------------------------------------------------------------------------------------------
+-- Procedimiento para registrar estadísticas diarias
+-- Este procedimiento recibe una fecha, un id de terminal y un id de empresa
+-- y registra las estadísticas diarias en la tabla "Estadisticas_Diarias"
+--En el caso de que me tire algun error, lo que hice fue que si no hay viajes para esa fecha, no se inserte nada en la tabla de estadisticas diarias| 
+CREATE OR REPLACE PROCEDURE registrar_estadistica_diaria (
+  p_fecha DATE,
+  p_id_terminal INT,
+  p_id_empresa INT
+) IS
+  v_total_viajes INT := 0;
+  v_total_pasajeros INT := 0;
+  v_duracion_promedio NUMBER := 0;
+BEGIN
+  SELECT
+    COUNT(*),
+    NVL(SUM(v."pasajeros"), 0),
+    NVL(ROUND(
+      AVG(
+        --Hago uso de la funcion que acabo de crear para calcular la duracion en horas
+        calcular_duracion_horas(v."fecha_salida", v."fecha_llegada")
+      ), 2
+    ), 0)
+  INTO v_total_viajes, v_total_pasajeros, v_duracion_promedio
+  FROM "Viajes" v
+  WHERE TRUNC(v."fecha_salida") = p_fecha
+    AND v."id_terminal" = p_id_terminal
+    AND v."id_empresa" = p_id_empresa;
+  -- Controlo que si hayan viajes para esa fecha, si no, el proceso no inserte nada
+  IF v_total_viajes > 0 THEN
+    INSERT INTO "estadisticas_diarias" (
+      "fecha_dia", "id_terminal", "id_empresa",
+      "total_viajes", "total_pasajeros", "duracion_promedio"
+    ) VALUES (
+      p_fecha, p_id_terminal, p_id_empresa,
+      v_total_viajes, v_total_pasajeros, v_duracion_promedio
+    );
+  END IF;
+  IF v_total_viajes = 0 THEN
+    RAISE_APPLICATION_ERROR(-20001, 'No hay viajes registrados para la fecha proporcionada.');
+  END IF;
+END;
+---------------------------------------------------------------------------------------------------------------------------
+-- Ejecucion del procedimiento para registrar estadísticas diarias y ver si funciona correctamente
+BEGIN
+  registrar_estadistica_diaria(DATE '2024-12-31', 1, 6);
+END;
+--Procedimiento PL/SQL terminado correctamente. 
+--Esto fue lo que me devolvió la consola, por lo que el procedimiento funciona correctamente
+---------------------------------------------------------------------------------------------------------------------------
+-- Ahora una consulta para ver las estadísticas diarias registradas
+SELECT * FROM "estadisticas_diarias";
+--El resultado de este SELECT lo puse en la carpeta de archivos complementarios y es el que se llama Extra_Respuesta_Procedimiento
 ---------------------------------------------------------------------------------------------------------------------------
