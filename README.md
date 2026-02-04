@@ -1,77 +1,65 @@
-# Guía del Repositorio - Examen 1
+# 📊 Data Cleaning & Analysis – Structured Dataset
 
-## Información del estudiante
+## Project Overview
+This project focuses on the design, implementation, and analysis of a structured relational database using a real dataset.  
+The main objective was to ensure **data quality**, **proper structure**, and **meaningful analysis** through SQL queries and supporting tools.
 
-- **Nombre:** Jacobo Arévalo Zea  
-- **ID:** 000516215
-
----
-
-## Introducción
-
-Hola profe, acá dejo una pequeña guía de lo que encontrará en este repositorio. El mismo está organizado en dos archivos de configuración y explicación, además de dos carpetas claramente identificadas:
-
-- **readme.txt** y **.gitignore** (archivos de configuración del repositorio).
-- Carpetas:
-  - **Entregas**
-  - **Archivos_complementarios**
+This type of work is commonly required before reporting, dashboards, or business decision-making.
 
 ---
 
-## 📂 Entregas
-
-1. **01_abastecimiento_conexión.pdf**  
-   📌 Proceso detallado para instalación, configuración y conexión segura de la base de datos Oracle en Oracle Cloud, empleando Oracle SQL Developer y Wallet para conexiones cifradas.
-
-2. **02_interaccion_ia.pdf**  
-   📌 Documento que registra interacciones relevantes con herramientas de inteligencia artificial (ChatGPT).
-
-3. **03_Diagrama_Relacional.png**  
-   📌 Diagrama relacional del modelo implementado.
-
-4. **04_Implementacion.sql**  
-   📌 Script SQL que incluye creación del usuario con privilegios mínimos, creación de tablas, relaciones entre tablas, carga inicial de datos, vista, procedimiento y función.
-
-5. **05_Consultas.sql**  
-   📌 Implementación de consultas SQL avanzadas con enfoque en análisis temporal, utilizando expresiones comunes de tabla (CTE) y funciones ventana (RANK, LAG).
-
-6. **06_Resultado_CONSULTA1.txt**  
-   📌 Resultados obtenidos de la primera consulta SQL implementada.
-
-7. **07_Resultado_CONSULTA2.txt**  
-   📌 Resultados obtenidos de la segunda consulta SQL implementada.
+## 🔍 What Was Done
+- Designed a **relational data model** from raw data
+- Cleaned and prepared the dataset for database insertion
+- Implemented a relational database with proper constraints
+- Executed **advanced SQL queries** for analytical purposes
+- Generated reliable outputs ready for analysis or reporting
 
 ---
 
-## 📂 Archivos Complementarios
-
-1. **01_abastecimiento_conexión.docx**  
-   📌 Versión editable (DOCX) del documento "01_abastecimiento_conexión.pdf".
-
-2. **02_interaccion_ia.docx**  
-   📌 Versión editable (DOCX) del documento "02_interaccion_ia.pdf".
-
-3. **convierte_csv_a_sql.py**  
-   📌 Script Python desarrollado para convertir los datos del archivo "viajes_con_ids.csv" a formato SQL.
-
-4. **Extra_Respuesta_Procedimiento.txt**  
-   📌 Resultado obtenido al ejecutar el procedimiento almacenado.
-
-5. **Extra_Resultado_Vista.txt**  
-   📌 Resultado obtenido al consultar la vista creada.
-
-6. **insert_viajes.sql**  
-   📌 Resultado generado por el script Python (consultas para insertar los datos en la tabla SQL).
-
-7. **INTERACCION_IA_COMPLETA.pdf**  
-   📌 Conversación completa con la IA utilizada para realizar el examen.
-
-8. **registro_llegadas_a_medellin_diciembre_2024.csv**  
-   📌 Dataset original empleado para el desarrollo del taller.
-
-9. **viajes_con_ids.csv**  
-   📌 Archivo generado por la IA para facilitar la carga de datos en la tabla "viajes".
+## 🛠 Tools & Technologies
+- SQL (Oracle)
+- Relational Database Design
+- Data Cleaning & Validation
+- Python (Data Transformation)
+- CSV Datasets
 
 ---
 
-**GRACIAS.**
+## 📈 Key Features
+- Creation of tables with relationships and constraints
+- Data loading and validation process
+- Use of advanced SQL techniques:
+  - Common Table Expressions (CTEs)
+  - Window functions (`RANK`, `LAG`)
+  - Views, procedures, and functions
+- Clean and structured outputs for analysis
+
+---
+
+## 📂 Repository Structure
+- **/Entregas**  
+  SQL scripts, database implementation, queries, and results.
+
+- **/Archivos_Complementarios**  
+  Supporting documents, datasets, and Python scripts used for data preparation.
+
+---
+
+## 💼 Use Case
+This project demonstrates my ability to:
+- Clean and structure messy datasets  
+- Design relational databases  
+- Write analytical SQL queries  
+- Prepare data for reporting or dashboards  
+
+These skills are applicable to **data cleaning**, **data analysis**, and **reporting tasks** for small and medium-sized businesses.
+
+---
+
+## ✅ Skills Demonstrated
+- Data Cleaning & Preparation  
+- SQL Analysis  
+- Data Validation  
+- Analytical Thinking  
+- Attention to Detail  
